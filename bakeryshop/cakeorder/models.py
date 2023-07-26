@@ -22,27 +22,27 @@ class Cake(models.Model):
         RECTANGLE = 'RL', _('Прямоугольник')
     
     class ToppingChoice(models.TextChoices):
-        NO = 'N', _('')
-        WHITE = 'W', _('')
-        CARAMEL = 'C', _('')
-        MAPlE = 'M', _('')
-        BLUEBERRY = 'B', _('')
-        CHOCOLATE = 'CH', _('')
-        STRAWBERRY = 'S', _('')
+        NO = 'N', _('Без')
+        WHITE = 'W', _('Белый соус')
+        CARAMEL = 'C', _('Карамель')
+        MAPlE = 'M', _('Кленовый')
+        BLUEBERRY = 'B', _('Черничный')
+        CHOCOLATE = 'CH', _('Молочный шоколад')
+        STRAWBERRY = 'S', _('Клубничный')
     
     class BerriesChoice(models.TextChoices):
-        BLACKBERRY = 'BK', _('')
-        RASPBERRY = 'R', _('')
-        BLUEBERRY = 'BE', _('')
-        STRAWBERRY = 'S', _('')
+        BLACKBERRY = 'BK', _('Ежевика')
+        RASPBERRY = 'R', _('Малина')
+        BLUEBERRY = 'BE', _('Голубика')
+        STRAWBERRY = 'S', _('Клубника')
     
     class DecorChoice(models.TextChoices):
-        PISTACHIOS = 'PS', _('')
-        MERINGUE = 'MR', _('')
-        HAZELNUT = 'H', _('')
-        PECAN = 'PN', ('')
-        MARSHMALLOW = 'MM', _('')
-        MARZIPAN = 'MN', _('')
+        PISTACHIOS = 'PS', _('Фисташки')
+        MERINGUE = 'MR', _('Безе')
+        HAZELNUT = 'H', _('Дундук')
+        PECAN = 'PN', ('Пекан')
+        MARSHMALLOW = 'MM', _('Макшмеллоу')
+        MARZIPAN = 'MN', _('Марципан')
     
     name = models.CharField(
         'Название',
@@ -50,7 +50,7 @@ class Cake(models.Model):
         blank=True
     )
     ocation = models.CharField(
-        verbose_name='Способ оплаты',
+        verbose_name='Повод',
         choices=OccationChoice.choices,
         max_length=30,
         blank=True
@@ -67,31 +67,31 @@ class Cake(models.Model):
         blank=True
     )
     levels_number = models.CharField(
-        verbose_name='Способ оплаты',
+        verbose_name='Количество уровней',
         choices=LevelChoice.choices,
         max_length=30,
         blank=True
     )
     form = models.CharField(
-        verbose_name='Способ оплаты',
+        verbose_name='Форма',
         choices=FormChoice.choices,
         max_length=30,
         blank=True
     )
     topping = models.CharField(
-        verbose_name='Способ оплаты',
+        verbose_name='Топпинг',
         choices=ToppingChoice.choices,
         max_length=30,
         blank=True
     )
     berries = models.CharField(
-        verbose_name='Способ оплаты',
+        verbose_name='Ягоды',
         choices=BerriesChoice.choices,
         max_length=30,
         blank=True
     )
     decor = models.CharField(
-        verbose_name='Способ оплаты',
+        verbose_name='Декор',
         choices=DecorChoice.choices,
         max_length=30,
         blank=True
