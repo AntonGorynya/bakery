@@ -6,52 +6,24 @@ from django.utils.translation import gettext_lazy as _
 
 class Cake(models.Model):
     
-    class OccationChoice(models.TextChoices):
+    class OccasionChoice(models.TextChoices):
         TEA = 'T', _('На чаепитие')
         BIRTHDAY = 'B', _('На день рождения')
         WEDDING = 'W', _('На свадьбу')
     
-    class LevelChoice(models.TextChoices):
-        ONE = 'O', _('1')
-        TWO = 'TW', _('2')
-        THREE = 'TH', _('3')
+    class TypeChoice(models.TextChoices):
+        CATALOG = 'CG', _('Из каталога')
+        CUSTOM = 'CM', _('Созданый пользователем')
     
-    class FormChoice(models.TextChoices):
-        ROUND = 'RD', _('Круг')
-        SQUARE = 'S', _('Квадрат')
-        RECTANGLE = 'RL', _('Прямоугольник')
-    
-    class ToppingChoice(models.TextChoices):
-        NO = 'N', _('Без')
-        WHITE = 'W', _('Белый соус')
-        CARAMEL = 'C', _('Карамель')
-        MAPlE = 'M', _('Кленовый')
-        BLUEBERRY = 'B', _('Черничный')
-        CHOCOLATE = 'CH', _('Молочный шоколад')
-        STRAWBERRY = 'S', _('Клубничный')
-    
-    class BerriesChoice(models.TextChoices):
-        BLACKBERRY = 'BK', _('Ежевика')
-        RASPBERRY = 'R', _('Малина')
-        BLUEBERRY = 'BE', _('Голубика')
-        STRAWBERRY = 'S', _('Клубника')
-    
-    class DecorChoice(models.TextChoices):
-        PISTACHIOS = 'PS', _('Фисташки')
-        MERINGUE = 'MR', _('Безе')
-        HAZELNUT = 'H', _('Дундук')
-        PECAN = 'PN', ('Пекан')
-        MARSHMALLOW = 'MM', _('Макшмеллоу')
-        MARZIPAN = 'MN', _('Марципан')
-    
+
     name = models.CharField(
         'Название',
         max_length=50,
         blank=True
     )
-    ocation = models.CharField(
+    occasion = models.CharField(
         verbose_name='Повод',
-        choices=OccationChoice.choices,
+        choices=OccasionChoice.choices,
         max_length=30,
         blank=True
     )
@@ -68,31 +40,26 @@ class Cake(models.Model):
     )
     levels_number = models.CharField(
         verbose_name='Количество уровней',
-        choices=LevelChoice.choices,
         max_length=30,
         blank=True
     )
     form = models.CharField(
         verbose_name='Форма',
-        choices=FormChoice.choices,
         max_length=30,
         blank=True
     )
     topping = models.CharField(
         verbose_name='Топпинг',
-        choices=ToppingChoice.choices,
         max_length=30,
         blank=True
     )
     berries = models.CharField(
         verbose_name='Ягоды',
-        choices=BerriesChoice.choices,
         max_length=30,
         blank=True
     )
     decor = models.CharField(
         verbose_name='Декор',
-        choices=DecorChoice.choices,
         max_length=30,
         blank=True
     )
@@ -101,10 +68,19 @@ class Cake(models.Model):
         max_length=50,
         blank=True
     )
+    type = models.CharField(
+        verbose_name='Тип торта',
+        choices=TypeChoice.choices,
+        max_length=30,
+        blank=True
+    )
+    
+    class Meta:
+        verbose_name = 'торт'
+        verbose_name_plural = 'торты'
     
     def __str__(self):
-        return f"{self.name} {self.ocation}"
-
+        return f"{self.name} {self.occasion}"
 
 class Customer(models.Model):
     name = models.CharField(
@@ -125,6 +101,10 @@ class Customer(models.Model):
         blank=True
     )
     
+    class Meta:
+        verbose_name = 'клиент'
+        verbose_name_plural = 'клиенты'
+    
     def __str__(self):
         return f"{self.name}: {self.address}, {self.phonenumber}"
 
@@ -132,9 +112,10 @@ class Customer(models.Model):
 class Order(models.Model):
     cake = models.ForeignKey(
         Cake,
-        verbose_name='Название торта',
+        verbose_name='Торт',
         on_delete=models.CASCADE,
-        related_name='orders'
+        related_name='orders',
+        blank=True
     )
     customer = models.ForeignKey(
         Customer,
@@ -163,7 +144,6 @@ class Order(models.Model):
         blank=True,
         max_length=400
     )
-    
     
     class Meta:
         verbose_name = 'заказ'
