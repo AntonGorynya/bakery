@@ -13,6 +13,8 @@ class Levels_number(models.Model):
         verbose_name = 'Количество уровней'
         verbose_name_plural = 'Количество уровней'
 
+    def __str__(self):
+        return str(self.quantity)
 
 class Form (models.Model):
     name = models.CharField(
@@ -24,6 +26,8 @@ class Form (models.Model):
         verbose_name = 'Форма'
         verbose_name_plural = 'Формы'
 
+    def __str__(self):
+        return self.name
 
 class Topping (models.Model):
     name = models.CharField(
@@ -39,6 +43,8 @@ class Topping (models.Model):
         verbose_name = 'Топпинг'
         verbose_name_plural = 'Топпинги'
 
+    def __str__(self):
+        return self.name
 
 class Berries (models.Model):
     name = models.CharField(
@@ -54,6 +60,9 @@ class Berries (models.Model):
         verbose_name = 'Ягода'
         verbose_name_plural = 'Ягоды'
 
+    def __str__(self):
+        return self.name
+
 
 class Decor (models.Model):
     name = models.CharField(
@@ -68,6 +77,9 @@ class Decor (models.Model):
     class Meta:
         verbose_name = 'Декор'
         verbose_name_plural = 'Декоры'
+
+    def __str__(self):
+        return self.name
 
 
 class Cake(models.Model):
