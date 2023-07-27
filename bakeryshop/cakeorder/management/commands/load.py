@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand
 import requests
 
-from cakeorder.models import Form, Topping, Berries, Decor
+from cakeorder.models import Levels_number, Form, Topping, Berries, Decor
 
 
 class Command(BaseCommand):
@@ -25,27 +25,33 @@ class Command(BaseCommand):
                 response.raise_for_status
                 bakery_info = response.json()
 
-                for name in bakery_info['Form']:
+                for position in bakery_info['Levels_number']:
+                    unit, created = Levels_number.objects.get_or_create(
+                        quantity=position['num'], price=position['price'])
+                    if created:
+                        print(f'В базу добавили {unit.quantity}')
+
+                for position in bakery_info['Form']:
                     unit, created = Form.objects.get_or_create(
-                        name = name)
+                        name=position['name'], price=position['price'])
                     if created:
                         print(f'В базу добавили {unit.name}')
 
-                for name in bakery_info['Topping']:
+                for position in bakery_info['Topping']:
                     unit, created = Topping.objects.get_or_create(
-                        name = name)
+                        name=position['name'], price=position['price'])
                     if created:
                         print(f'В базу добавили {unit.name}')
 
-                for name in bakery_info['Berries']:
+                for position in bakery_info['Berries']:
                     unit, created = Berries.objects.get_or_create(
-                        name = name)
+                        name=position['name'], price=position['price'])
                     if created:
                         print(f'В базу добавили {unit.name}')
 
-                for name in bakery_info['Decor']:
+                for position in bakery_info['Decor']:
                     unit, created = Decor.objects.get_or_create(
-                        name = name)
+                        name=position['name'], price=position['price'])
                     if created:
                         print(f'В базу добавили {unit.name}')
             except ValidationError:
