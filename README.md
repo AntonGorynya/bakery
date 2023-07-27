@@ -29,13 +29,8 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
+### Загрузка данных
 Наполните базу начальными данными
 ```sh
-python manage.py ХХХХХХ
-```
-
-### Загрузка данных
-
-```
 python3 manage.py load https://raw.githubusercontent.com/Amartyanov1974/bakery-data/main/data_bakery.json
 ```
