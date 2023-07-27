@@ -9,6 +9,10 @@ class Levels_number(models.Model):
         verbose_name='Количество уровней',
         unique =True,
         )
+    price = models.IntegerField(
+        verbose_name='Цена',
+        default=0)
+
     class Meta:
         verbose_name = 'Количество уровней'
         verbose_name_plural = 'Количество уровней'
@@ -22,6 +26,9 @@ class Form (models.Model):
         max_length=30,
         unique =True,
         )
+    price = models.IntegerField(
+        verbose_name='Цена',
+        default=0)
     class Meta:
         verbose_name = 'Форма'
         verbose_name_plural = 'Формы'
@@ -31,10 +38,13 @@ class Form (models.Model):
 
 class Topping (models.Model):
     name = models.CharField(
-        verbose_name='Наименование',
-        max_length=30,
+        verbose_name = 'Наименование',
+        max_length = 30,
         unique =True,
         )
+    price = models.IntegerField(
+        verbose_name='Цена',
+        default=0)
     availability = models.BooleanField(
         verbose_name='Наличие',
         default=True)
@@ -52,6 +62,9 @@ class Berries (models.Model):
         max_length=30,
         unique =True,
         )
+    price = models.IntegerField(
+        verbose_name='Цена',
+        default=0)
     availability = models.BooleanField(
         verbose_name='Наличие',
         default=True)
@@ -70,6 +83,9 @@ class Decor (models.Model):
         max_length=30,
         unique =True,
         )
+    price = models.IntegerField(
+        verbose_name='Цена',
+        default=0)
     availability = models.BooleanField(
         verbose_name='Наличие',
         default=True)
