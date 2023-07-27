@@ -29,6 +29,11 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
+Наполните базу начальными данными
+```sh
+python manage.py ХХХХХХ
+```
+
 ### Загрузка данных
 
 ```
