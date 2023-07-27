@@ -197,7 +197,7 @@
                     </div>
                     <div class="d-flex align-items-center flex-wrap mb-3">
                         <span class="me-3 fs_40 cake_blue">Количество уровней</span>
-                        {% for level in levels %}
+                        {% for level in data.levels %}
                             <v-field v-model="Levels" type="radio" name="lvls" id="num{{ level }}" value="{{ level }}" class="d-none cake__input"></v-field>
                             <label for="num{{ level }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ level }}</label>
                         {% endfor %}
@@ -205,14 +205,14 @@
 
                     <div class="d-flex align-items-center flex-wrap mb-3">
                         <span class="me-3 fs_40 cake_blue">Форма</span>
-                        {% for form in forms %}
+                        {% for form in data.forms %}
                             <v-field v-model="Form" type="radio" name="form" id="form{{ form.id }}" value="{{ form.id }}" class="d-none cake__input"></v-field>
                             <label for="form{{ form.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ form.name }}</label>
                         {% endfor %}
                     </div>
                     <div class="d-flex align-items-center flex-wrap mb-3">
                         <span class="me-3 fs_40 cake_blue">Топпинг</span>
-                        {% for topping in toppings %}
+                        {% for topping in data.toppings %}
                             <v-field v-model="Topping" type="radio" name="topping" id="topping{{ topping.id }}" value="{{ topping.id }}" class="d-none cake__input"></v-field>
                             <label for="topping{{ topping.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ topping.name }}</label>
                         {% endfor %}
@@ -220,14 +220,14 @@
                     <h1 class="me-3 fs_40 cake_pink mb-3 mt-5">Дополнительно</h1>
                     <div class="d-flex align-items-center flex-wrap mb-3">
                         <span class="me-3 fs_40 cake_blue">Ягоды</span>
-                        {% for berry in berries %}
+                        {% for berry in data.berries %}
                             <v-field v-model="Berries" type="radio" name="berries" id="berries{{ berry.id }}" value="{{ berry.id }}" class="d-none cake__input"></v-field>
                             <label for="berries{{ berry.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ berry.name }}</label>
                         {% endfor %}
                     </div>
                     <div class="d-flex align-items-center flex-wrap mb-3">
                         <span class="me-3 fs_40 cake_blue">Декор</span>
-                        {% for decor in decors %}
+                        {% for decor in data.decors %}
                             <v-field v-model="Decor" type="radio" name="decor" id="decor{{ decor.id }}" value="{{ decor.id }}" class="d-none cake__input"></v-field>
                             <label for="decor{{ decor.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ decor.name }}</label>
                         {% endfor %}
@@ -253,23 +253,23 @@
 
             <section class="row pt-header" id="step4" v-if="Designed">
                 <form class="d-none">
-                    {% for level in levels %}
+                    {% for level in data.levels %}
                         <input v-model="Levels" value="{{ level }}" type="radio" name="LEVELS">
                     {% endfor %}
                     <br>
-                    {% for form in forms %}
+                    {% for form in data.forms %}
                         <input v-model="Form" value="{{ form.id }}" type="radio" name="FORM">
                     {% endfor %}
                     <br>
-                    {% for topping in toppings %}
+                    {% for topping in data.toppings %}
                         <input v-model="Topping" value="{{ topping.id }}" type="radio" name="TOPPING">
                     {% endfor %}
                     <br>
-                    {% for berry in berries %}
+                    {% for berry in data.berries %}
                         <input v-model="Berries" value="{{ berry.id }}" type="radio" name="BERRIES">
                     {% endfor %}
                     <br>
-                    {% for decor in decors %}
+                    {% for decor in data.decors %}
                         <input v-model="Decor" value="{{ decor.id }}" type="radio" name="DECOR">
                     {% endfor %}
                     <br>
@@ -411,6 +411,9 @@
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+
+{{ data|json_script:"cake_data" }}
+{{ costs|json_script:"cake_costs" }}
 <script src="{% static 'index.js' %}"></script>
 <script src="{% static 'registration.js' %}"></script>
 </body>
