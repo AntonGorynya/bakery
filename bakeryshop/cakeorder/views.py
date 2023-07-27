@@ -12,10 +12,17 @@ def index(request):
     context = {
         'data': {
             'levels': [level.quantity for level in levels],
-            'forms': [{'id': form.id, 'name': form.name} for form in forms],
-            'toppings': [{'id': topping.id, 'name': topping.name} for topping in toppings],
-            'berries': [{'id': berry.id, 'name': berry.name} for berry in berries],
-            'decors': [{'id': decor.id, 'name': decor.name} for decor in decors],
+            'forms': forms,
+            'toppings': toppings,
+            'berries': berries,
+            'decors': decors,
+        },
+        'names': {
+            'levels': ['не выбрано'] + [level.quantity for level in levels],
+            'forms': ['не выбрано'] + [form.name for form in forms],
+            'toppings': ['не выбрано'] + [topping.name for topping in toppings],
+            'berries': ['не выбрано'] + [berry.name for berry in berries],
+            'decors': ['не выбрано'] + [decor.name for decor in decors],
         },
         'costs': {
             'levels': [0] + [level.price for level in levels],
