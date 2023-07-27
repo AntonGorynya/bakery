@@ -4,6 +4,7 @@ from django.utils.html import format_html
 from .models import Cake
 from .models import Customer
 from .models import Order
+from .models import Levels_number, Form, Topping, Berries, Decor
 
 
 @admin.register(Cake)
@@ -17,7 +18,7 @@ class CakeAdmin(admin.ModelAdmin):
     readonly_fields = [
         'show_preview'
     ]
-    
+
     def show_preview(self, obj):
         return format_html(
             '<img style="max-height:{height}" src="{url}"/>',
@@ -45,3 +46,9 @@ class OrderAdmin(admin.ModelAdmin):
         'delivery_time',
         'delivery_comment',
     ]
+
+admin.site.register(Levels_number)
+admin.site.register(Form)
+admin.site.register(Topping)
+admin.site.register(Berries)
+admin.site.register(Decor)
