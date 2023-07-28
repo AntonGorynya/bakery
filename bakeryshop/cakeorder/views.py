@@ -110,11 +110,13 @@ def login_page(request):
 def lk(request):
     name = request.user
     client = Customer.objects.get(name=name)
-    context = {'client': {'user': client.name,
-                        'phone': client.phonenumber,
-                        'mail': client.mail,
-                        },
-                }
+    context = {
+        'client': {
+            'user': client.name,
+            'phone': client.phonenumber,
+            'mail': client.mail,
+        },
+    }
     print(context)
 
     return render(request, 'lk.html', context=context)

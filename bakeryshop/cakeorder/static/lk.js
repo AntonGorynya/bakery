@@ -3,6 +3,8 @@ function loadJson(elementID) {
 }
 var cakeLk = loadJson('cake_lk');
 
+console.log(cakeLk)
+
 Vue.createApp({
     components: {
         VForm: VeeValidate.Form,
@@ -12,8 +14,8 @@ Vue.createApp({
     data() {
         return {
             Edit: false,
-            Name: cakeLk.name,
-            Phone: cakeLk.phonenumber,
+            Name: cakeLk.user,
+            Phone: cakeLk.phone,
             Email: cakeLk.mail,
             Schema: {
                 name_format: (value) => {
