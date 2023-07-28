@@ -1,9 +1,8 @@
 from django.shortcuts import render, loader, HttpResponse
-from .models import Levels_number, Form, Topping, Berries, Decor
+from .models import Levels_number, Form, Topping, Berries, Decor, Customer
 from .forms import OrderForm
 
 def index(request):
-
     if request.method == 'GET':
         level_id = request.GET.get('LEVELS')
         form_id = request.GET.get('FORM')
@@ -19,6 +18,14 @@ def index(request):
         delivery_date = request.GET.get('DATE')
         delivery_time = request.GET.get('TIME')
         delivery_comments = request.GET.get('DELIVCOMMENTS')
+
+        created, customer = Customer.objects.get_or_create(
+            name=user_name,
+            address=addess,
+            phonenumber=phone,
+            mail=email
+        )
+
 
 
     levels = Levels_number.objects.all()
