@@ -208,7 +208,7 @@ class Customer(models.Model):
     name = models.CharField(
         'ФИО клиента',
         max_length=50,
-        unique=True,
+        null=True
     )
     address = models.CharField(
         max_length=100,
