@@ -1,8 +1,26 @@
 from django.shortcuts import render, loader, HttpResponse
 from .models import Levels_number, Form, Topping, Berries, Decor
-
+from .forms import OrderForm
 
 def index(request):
+
+    if request.method == 'GET':
+        level_id = request.GET.get('LEVELS')
+        form_id = request.GET.get('FORM')
+        topping_id = request.GET.get('TOPPING')
+        berries_id = request.GET.get('BERRIES')
+        decor_id = request.GET.get('DECOR')
+        words = request.GET.get('WORDS')
+        comments = request.GET.get('COMMENTS')
+        user_name = request.GET.get('NAME')
+        phone = request.GET.get('PHONE')
+        email = request.GET.get('EMAIL')
+        addess = request.GET.get('ADDRESS')
+        delivery_date = request.GET.get('DATE')
+        delivery_time = request.GET.get('TIME')
+        delivery_comments = request.GET.get('DELIVCOMMENTS')
+
+
     levels = Levels_number.objects.all()
     forms = Form.objects.all()
     toppings = Topping.objects.all()
