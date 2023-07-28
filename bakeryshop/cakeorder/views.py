@@ -1,5 +1,5 @@
 from django.shortcuts import render, loader, HttpResponse, redirect
-from .models import Levels_number, Form, Topping, Berries, Decor, Customer
+from .models import Levels_number, Form, Topping, Berries, Decor, Customer, Cake
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
@@ -11,6 +11,39 @@ def index(request):
     toppings = Topping.objects.all()
     berries = Berries.objects.all()
     decors = Decor.objects.all()
+
+    if request.method == 'GET':
+        if request.GET:
+            level_id = request.GET.get('LEVELS')
+            form_id = request.GET.get('FORM')
+            topping_id = request.GET.get('TOPPING')
+            berries_id = request.GET.get('BERRIES')
+            decor_id = request.GET.get('DECOR')
+            words = request.GET.get('WORDS')
+            comments = request.GET.get('COMMENTS')
+            user_name = request.GET.get('NAME')
+            phone = request.GET.get('PHONE')
+            email = request.GET.get('EMAIL')
+            addess = request.GET.get('ADDRESS')
+            delivery_date = request.GET.get('DATE')
+            delivery_time = request.GET.get('TIME')
+            delivery_comments = request.GET.get('DELIVCOMMENTS')
+
+            customer, _ = Customer.objects.get_or_create(
+                name=user_name,
+                address=addess,
+                phonenumber=phone,
+                mail=email
+            )
+            cake, _ = Cake.objects.get_or_create(
+                price='100',
+                levels_number=levels.get(id=level_id),
+                form=forms.get(id=form_id),
+                topping=toppings.get(id=topping_id),
+                berries=berries.get_or_none(id=berries_id),
+                decor=decors.get_or_none(id=decor_id),
+                sign=words
+            )
 
     context = {
         'data': {

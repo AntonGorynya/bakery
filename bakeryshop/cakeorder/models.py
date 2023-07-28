@@ -3,6 +3,14 @@ from django.core.validators import MinValueValidator
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+class GetOrNoneQuerySet(models.QuerySet):
+
+    def get_or_none(self, *args, **kwargs):
+        try:
+            return self.get(*args, **kwargs)
+        except :
+            return None
+
 
 class Levels_number(models.Model):
     quantity = models.IntegerField(
@@ -69,6 +77,8 @@ class Berries (models.Model):
         verbose_name='Наличие',
         default=True)
 
+    objects = GetOrNoneQuerySet.as_manager()
+
     class Meta:
         verbose_name = 'Ягода'
         verbose_name_plural = 'Ягоды'
@@ -93,6 +103,8 @@ class Decor (models.Model):
     class Meta:
         verbose_name = 'Декор'
         verbose_name_plural = 'Декоры'
+
+    objects = GetOrNoneQuerySet.as_manager()
 
     def __str__(self):
         return self.name
@@ -151,21 +163,24 @@ class Cake(models.Model):
         verbose_name='Топпинг',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     berries = models.ForeignKey(
         Berries,
         verbose_name='Ягоды',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     decor = models.ForeignKey(
         Decor,
         verbose_name='Декор',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     sign = models.CharField(
         'Надпись',
