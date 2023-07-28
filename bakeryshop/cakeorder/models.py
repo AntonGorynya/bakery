@@ -277,4 +277,25 @@ class Order(models.Model):
         return f"{self.customer.name}: {self.customer.phonenumber}"
 
 
-
+class Advertisement(models.Model):
+    link = models.CharField(
+        'Ссылка на рекламу',
+        max_length=200,
+        blank=True
+    )
+    bitlink = models.CharField(
+        'Сокращенная ссылка',
+        max_length=100,
+        blank=True
+    )
+    clicks = models.IntegerField(
+        'Количество переходов по ссылке',
+        null=True
+    )
+    
+    class Meta:
+        verbose_name = 'рекламная ссылка'
+        verbose_name_plural = 'рекламные ссылки'
+    
+    def __str__(self):
+        return f"{self.link}: {self.clicks}"
