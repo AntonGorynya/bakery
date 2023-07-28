@@ -3,7 +3,8 @@ from django.utils.html import format_html
 
 from .models import Cake
 from .models import Customer
-from .models import Order
+from .models import Order 
+from .models import Advertisement
 from .models import Levels_number, Form, Topping, Berries, Decor
 
 
@@ -47,8 +48,20 @@ class OrderAdmin(admin.ModelAdmin):
         'delivery_comment',
     ]
 
+
 admin.site.register(Levels_number)
 admin.site.register(Form)
 admin.site.register(Topping)
 admin.site.register(Berries)
 admin.site.register(Decor)
+
+
+@admin.register(Advertisement)
+class AdvertisementAdmin(admin.ModelAdmin):
+    list_display = [
+        'link',
+        'clicks'
+    ]
+    readonly_fields = [
+        'link'
+    ]
