@@ -15,7 +15,7 @@ from typing import Any, Optional
 class Command(BaseCommand):
     help = 'Посчитать количество переходов по ссылкам'
     
-    def handle(self, *args: Any, **options: Any) -> str | None:
+    def handle(self, *args: Any, **options: Any):
         access_token = os.environ['BITLY_ACCESS_TOKEN']
         advertisements = Advertisement.objects.all()
         try:

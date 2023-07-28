@@ -1,3 +1,4 @@
+import os
 from django.contrib import admin
 from django.utils.html import format_html
 
@@ -58,6 +59,8 @@ admin.site.register(Decor)
 
 @admin.register(Advertisement)
 class AdvertisementAdmin(admin.ModelAdmin):
+    change_list_template = os.path.join('admin', 'model_change_list.html')
+
     list_display = [
         'link',
         'clicks'
