@@ -1,8 +1,9 @@
 from django.shortcuts import render, loader, HttpResponse, redirect
-from .models import Levels_number, Form, Topping, Berries, Decor, Customer, Cake
+from .models import Levels_number, Form, Topping, Berries, Decor, Customer, Cake, Order
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
+from datetime import datetime
 
 
 def index(request):
@@ -20,7 +21,7 @@ def index(request):
             berries_id = request.GET.get('BERRIES')
             decor_id = request.GET.get('DECOR')
             words = request.GET.get('WORDS')
-            comments = request.GET.get('COMMENTS')
+            comment = request.GET.get('COMMENTS')
             user_name = request.GET.get('NAME')
             phone = request.GET.get('PHONE')
             email = request.GET.get('EMAIL')
@@ -44,6 +45,15 @@ def index(request):
                 decor=decors.get_or_none(id=decor_id),
                 sign=words
             )
+            order, _ = Order.objects.get_or_create(
+                cake=cake,
+                customer=customer,
+                delivery_time=datetime.strptime(f'{delivery_date} {delivery_time}', '%Y-%m-%d %H:%M'),
+                comment=comment,
+                delivery_comment=delivery_comments
+
+            )
+
 
     context = {
         'data': {
