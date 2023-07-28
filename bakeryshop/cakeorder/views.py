@@ -1,6 +1,9 @@
-from django.shortcuts import render, loader, HttpResponse
+from django.shortcuts import render, loader, HttpResponse, redirect
 from .models import Levels_number, Form, Topping, Berries, Decor, Customer, Cake
-from .forms import OrderForm
+from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.models import User
+from django.views.decorators.http import require_http_methods
+
 
 def index(request):
     levels = Levels_number.objects.all()
@@ -65,14 +68,46 @@ def index(request):
             'decors': [0] + [decor.price for decor in decors],
         }
     }
-    template = loader.get_template('index.html')
-    return HttpResponse(template.render(context))
+
+    return render(request, 'index.html', context=context)
+
+
+@require_http_methods(['POST'])
+def login_page(request):
+    payload = dict(request.POST.items())
+    phone = payload['REG']
+    try:
+        client = Customer.objects.get(phonenumber=phone)
+        user = authenticate(username=client.name, password='password')
+    except:
+        user = None
+
+    if not user:
+        user = User.objects.create_user(
+            username=phone,
+            password='password'
+        )
+
+    login(request, user)
+    client, created = Customer.objects.get_or_create(
+        name=user,
+        phonenumber=phone,
+    )
+
+    return redirect('lk')
 
 
 def lk(request):
-    context = {}
-    template = loader.get_template('lk.html')
-    return HttpResponse(template.render(context))
+    name = request.user
+    client = Customer.objects.get(name=name)
+    context = {'client': {'user': client.name,
+                        'phone': client.phonenumber,
+                        'mail': client.mail,
+                        },
+                }
+    print(context)
+
+    return render(request, 'lk.html', context=context)
 
 
 def lk_order(request):
