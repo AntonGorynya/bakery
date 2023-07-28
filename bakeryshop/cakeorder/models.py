@@ -190,6 +190,7 @@ class Customer(models.Model):
     name = models.CharField(
         'ФИО клиента',
         max_length=50,
+        unique=True,
     )
     address = models.CharField(
         max_length=100,
@@ -197,7 +198,8 @@ class Customer(models.Model):
     )
     phonenumber = models.CharField(
         'Номер телефона',
-        max_length=50
+        max_length=50,
+        unique=True
     )
     mail = models.CharField(
         'Электронная почта',

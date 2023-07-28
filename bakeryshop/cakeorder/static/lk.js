@@ -1,3 +1,8 @@
+function loadJson(elementID) {
+  return JSON.parse(document.getElementById(elementID).textContent);
+}
+var cakeLk = loadJson('cake_lk');
+
 Vue.createApp({
     components: {
         VForm: VeeValidate.Form,
@@ -7,9 +12,9 @@ Vue.createApp({
     data() {
         return {
             Edit: false,
-            Name: 'Ирина',
-            Phone: '8 909 000-00-00',
-            Email: 'nyam@gmail.com',
+            Name: cakeLk.name,
+            Phone: cakeLk.phonenumber,
+            Email: cakeLk.mail,
             Schema: {
                 name_format: (value) => {
                     const regex = /^[a-zA-Zа-яА-я]+$/

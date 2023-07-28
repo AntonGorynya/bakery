@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('lk', views.lk, name='lk'),
+    path('login', views.login_page, name='login'),
     path('lk-order', views.lk_order, name='lk_order'),
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
