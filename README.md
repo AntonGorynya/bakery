@@ -32,5 +32,5 @@ python manage.py createsuperuser
 ### Загрузка данных
 Наполните базу начальными данными
 ```sh
-python3 manage.py load https://raw.githubusercontent.com/Amartyanov1974/bakery-data/main/data_bakery.json
+python manage.py load https://raw.githubusercontent.com/Amartyanov1974/bakery-data/main/data_bakery.json
 ```

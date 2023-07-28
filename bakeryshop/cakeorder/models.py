@@ -135,7 +135,10 @@ class Cake(models.Model):
     )
     image = models.ImageField(
         'картинка',
-        blank=True
+        blank=True,
+        null=True,
+        default='default.png'
+
     )
     price = models.DecimalField(
         max_digits=7,
