@@ -10,6 +10,12 @@ from django.shortcuts import redirect
 
 
 def index(request):
+    try:
+        user_name = request.session['user_name']
+        client = Customer.objects.get(name=user_name)
+        name = client.name
+    except:
+        name = ''
     levels = Levels_number.objects.all()
     forms = Form.objects.all()
     toppings = Topping.objects.all()
@@ -55,7 +61,8 @@ def index(request):
                     mail=email,
                     address= address
                 )
-
+            login(request, user)
+            request.session['user_name'] = client.name
             cake, _ = Cake.objects.get_or_create(
                 price='100',
                 levels_number=levels.get(id=level_id),
@@ -94,7 +101,9 @@ def index(request):
             'toppings': [0] + [topping.price for topping in toppings],
             'berries': [0] + [berry.price for berry in berries],
             'decors': [0] + [decor.price for decor in decors],
-        }
+        },
+        'client': {
+            'name': name}
     }
 
     return render(request, 'index.html', context=context)
@@ -139,7 +148,7 @@ def lk(request):
 
     context = {
         'client': {
-            'user': client.name,
+            'name': client.name,
             'phone': client.phonenumber,
             'mail': client.mail,
         },
@@ -155,7 +164,7 @@ def catalog(request):
         client = Customer.objects.get(name=user_name)
         name = client.name
     except:
-        name = None
+        name = ''
     cakes = Cake.objects.filter(type='CG')
     cakes_con =[]
     if cakes:
@@ -171,7 +180,7 @@ def catalog(request):
 
     context = {
         'client': {
-            'user': name,
+            'name': name,
         },
         'cakes': cakes_con
     }

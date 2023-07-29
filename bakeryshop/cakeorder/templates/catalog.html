@@ -46,11 +46,16 @@
                     <small class="fw-lighter text-decoration-none fs_12 cake_blue">Пн - Вс 10:00—20:00</small>
                 </li>
                 <li class="nav-item d-flex align-items-center">
-                    <a class="nav-link fw-lighter me-1 cake_blue position-relative" href="lk">
-                        <img src="{% static "img/user.svg" %}" alt="">
-                        <span class="position-absolute translate-middle badge rounded-pill cake__bg_pink fs_8 d-none"></span>
-                    </a>
-                    <a class="nav-link fw-lighter cake_grey fs_12" href="#">
+                    <a class="nav-link fw-lighter cake_grey fs_12" href="lk">
+                        {% if client.name %}
+                            <p>{{client.name}}</p>
+                        {% else %}
+                            <a class="nav-link fw-lighter me-1 cake_blue position-relative" href="#RegModal" data-bs-toggle="modal">
+                                <img src="{% static 'img/user.svg' %}" alt="">
+                                <!--метка на иконке, убрать класс d-none чтоб появилась-->
+                                <span class="position-absolute translate-middle badge rounded-pill cake__bg_pink fs_8 d-none">1</span>
+                            </a>
+                        {% endif %}
                     </a>
                 </li>
             </ul>
@@ -71,13 +76,12 @@
                                 <img src="{% static cake.img_url %}" alt="" class="">
                                 <span class="cake_blue mt-4 fw-lighter mb-4 text-center">{{cake.occasion}}</span>
                                 <span class="cake_blue mt-4 fw-lighter mb-4 text-center">{{cake.price}} руб.</span>
+                                <a class="btn text-white rounded-pill align-self-center px-5 mt-3 shadow-none cake__button cake__bg_pink" href="./index.html">Купить</a>
                             </div>
                         </div>
                         {% endfor %}
                     {% endif %}
                 </article>
-
-            <h2 class="fs_40 cake_pink mt-5">Торты</h2>
 
             <p class="cake_grey">Вы можете добавить торт из <a href="./index.html#step2" class="text-decoration-none cake_pink">Каталога</a> или <a href="./index.html#step3" class="text-decoration-none cake_pink">Создать свой</a>.</p>
             <span class="cake_grey">Есть вопросы?</span>
@@ -88,7 +92,5 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-{{ client|json_script:"cake_lk" }}
-<script src="{% static "lk.js" %}"></script>
 </body>
 </html>
