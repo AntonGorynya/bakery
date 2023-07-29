@@ -3,7 +3,10 @@ from .models import Levels_number, Form, Topping, Berries, Decor, Customer, Cake
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
+from .management.commands.count_clicks import count_clicks
 from datetime import datetime
+from django.contrib import admin
+from django.shortcuts import redirect
 
 
 def index(request):
@@ -140,3 +143,8 @@ def lk(request):
     }
 
     return render(request, 'lk.html', context = context)
+
+
+def sync_click(request):
+    print(count_clicks())
+    return redirect("/admin/cakeorder/advertisement/")
