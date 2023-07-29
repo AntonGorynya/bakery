@@ -120,16 +120,19 @@ def login_page(request):
 
 
 def lk(request):
-    user_name = request.session['user_name']
+    try:
+        user_name = request.session['user_name']
+    except:
+        return redirect('/')
+
     client = Customer.objects.get(name=user_name)
     orders = Order.objects.filter(customer=client)
     orders_con =[]
     if orders:
         for order in orders:
-            print(order.id)
             order_con = {
                 'numer': order.id,
-                'cake': order.cake,
+                'cake': order.cake.name,
                 'status': order.status,
                 'delivery_time': order.delivery_time.strftime('%H:%M - %d %B')}
             orders_con.append(order_con)
@@ -144,6 +147,36 @@ def lk(request):
     }
 
     return render(request, 'lk.html', context = context)
+
+
+def catalog(request):
+    try:
+        user_name = request.session['user_name']
+        client = Customer.objects.get(name=user_name)
+        name = client.name
+    except:
+        name = None
+    cakes = Cake.objects.filter(type='CG')
+    cakes_con =[]
+    if cakes:
+        for cake in cakes:
+            cake_con = {
+                'name': cake.name,
+                'occasion': cake.get_occasion_display(),
+                'img_url': cake.image.url,
+                'price': cake.price,
+                'type': cake.get_type_display()
+                }
+            cakes_con.append(cake_con)
+
+    context = {
+        'client': {
+            'user': name,
+        },
+        'cakes': cakes_con
+    }
+    print(context['cakes'])
+    return render(request, 'catalog.html', context = context)
 
 
 def sync_click(request):
