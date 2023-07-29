@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
+
 
 class GetOrNoneQuerySet(models.QuerySet):
 
@@ -125,7 +127,8 @@ class Cake(models.Model):
     name = models.CharField(
         'Название',
         max_length=50,
-        blank=True
+        blank=True,
+        default='Торт',
     )
     occasion = models.CharField(
         verbose_name='Повод',
@@ -205,8 +208,15 @@ class Cake(models.Model):
         return f"{self.name} {self.occasion}"
 
 class Customer(models.Model):
+
+    client = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name = 'клиент',
+        unique=True
+    )
     name = models.CharField(
-        'ФИО клиента',
+        'Имя клиента',
         max_length=50,
         null=True
     )
@@ -234,6 +244,13 @@ class Customer(models.Model):
 
 
 class Order(models.Model):
+
+    STATUS_IS_CHOICES = [
+        ('Готовится', 'Готовится'),
+        ('Доставляется', 'Доставляется'),
+        ('Доставлен', 'Доставлен'),
+        ]
+    
     cake = models.ForeignKey(
         Cake,
         verbose_name='Торт',
@@ -267,6 +284,13 @@ class Order(models.Model):
         verbose_name='Комментарий курьеру',
         blank=True,
         max_length=400
+    )
+    status = models.CharField(
+        verbose_name='Статус заказа',
+        blank=True,
+        max_length=400,
+        choices=STATUS_IS_CHOICES,
+        default='Готовится'
     )
 
     class Meta:

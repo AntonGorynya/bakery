@@ -25,20 +25,36 @@ def index(request):
             decor_id = request.GET.get('DECOR')
             words = request.GET.get('WORDS')
             comment = request.GET.get('COMMENTS')
-            user_name = request.GET.get('NAME')
-            phone = request.GET.get('PHONE')
             email = request.GET.get('EMAIL')
-            addess = request.GET.get('ADDRESS')
+            address = request.GET.get('ADDRESS')
             delivery_date = request.GET.get('DATE')
             delivery_time = request.GET.get('TIME')
             delivery_comments = request.GET.get('DELIVCOMMENTS')
+            phone = request.GET.get('PHONE')
+            user_name = request.GET.get('NAME')
+            client = Customer.objects.filter(phonenumber=phone)
+            if client:
+                client = client.first()
+                user_name = client.name
+            user_login = f'{user_name}{phone}'
 
-            customer, _ = Customer.objects.get_or_create(
-                name=user_name,
-                address=addess,
+            try:
+                user = authenticate(username=user_login,
+                                    password='password')
+            except:
+                user = None
+            if not user:
+                user = User.objects.create_user(
+                    username=user_login,
+                    password='password',
+                )
+            customer, created = Customer.objects.get_or_create(
+                client=user,
                 phonenumber=phone,
+                name=user_name,
                 mail=email
             )
+
             cake, _ = Cake.objects.get_or_create(
                 price='100',
                 levels_number=levels.get(id=level_id),
@@ -54,9 +70,7 @@ def index(request):
                 delivery_time=datetime.strptime(f'{delivery_date} {delivery_time}', '%Y-%m-%d %H:%M'),
                 comment=comment,
                 delivery_comment=delivery_comments
-
             )
-
 
     context = {
         'data': {
@@ -91,48 +105,46 @@ def login_page(request):
     phone = payload['REG']
     try:
         client = Customer.objects.get(phonenumber=phone)
-        user = authenticate(username=client.name, password='password')
+        user_login = f'{client.name}{phone}'
+        user = authenticate(username=user_login, password='password')
     except:
         user = None
 
     if not user:
-        user = User.objects.create_user(
-            username=phone,
-            password='password'
-        )
+        return redirect('index')
 
     login(request, user)
-    client, created = Customer.objects.get_or_create(
-        name=user,
-        phonenumber=phone,
-    )
-
+    request.session['user_name'] = client.name
     return redirect('lk')
 
 
 def lk(request):
-    name = request.user
-    client = Customer.objects.get(name=name)
+    user_name = request.session['user_name']
+    client = Customer.objects.get(name=user_name)
+    orders = Order.objects.filter(customer=client)
+    orders_con =[]
+    if orders:
+        for order in orders:
+            print(order.id)
+            order_con = {
+                'numer': order.id,
+                'cake': order.cake,
+                'status': order.status,
+                'delivery_time': order.delivery_time.strftime('%H:%M - %d %B')}
+            orders_con.append(order_con)
+
     context = {
         'client': {
             'user': client.name,
             'phone': client.phonenumber,
             'mail': client.mail,
         },
+        'orders': orders_con
     }
-    print(context)
 
-    return render(request, 'lk.html', context=context)
-
-
-def lk_order(request):
-    context = {}
-    template = loader.get_template('lk-order.html')
-    return HttpResponse(template.render(context))
+    return render(request, 'lk.html', context = context)
 
 
 def sync_click(request):
     print(count_clicks())
     return redirect("/admin/cakeorder/advertisement/")
-
-

@@ -55,7 +55,7 @@
                         <span class="position-absolute translate-middle badge rounded-pill cake__bg_pink fs_8">1</span>
                     </a>
                     <a class="nav-link fw-lighter cake_grey fs_12" href="#">
-                        Ирина
+                    <p>{{client.user}}</p>
                     </a>
                 </li>
             </ul>
@@ -117,7 +117,17 @@
                 </div>
             </v-form>
             <h2 class="fs_40 cake_pink mt-5">Мои заказы</h2>
-            <span class="cake_grey">У вас еще нет заказов.</span>
+            {% if orders %}
+                {% for order in orders %}
+                    {% if order.status == "Доставлен" %}
+                        <p class="fs_20 cake_blue"># {{order.numer}} {{order.cake}} {{order.status}}, {{order.delivery_time}}</p>
+                    {% else %}
+                        <p class="fs_20 cake_blue"># {{order.numer}} {{order.cake}} {{order.status}}, доставка к {{order.delivery_time}}</p>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <span class="cake_grey">У вас еще нет заказов.</span>
+            {% endif %}
             <p class="cake_grey">Вы можете добавить торт из <a href="./index.html#step2" class="text-decoration-none cake_pink">Каталога</a> или <a href="./index.html#step3" class="text-decoration-none cake_pink">Создать свой</a>.</p>
             <span class="cake_grey">Есть вопросы?</span>
             <span class="cake_grey">Воспользуйтесь нашим <a href="https://vk.com/devmanorg" class="text-decoration-none cake_pink">чат-ботом</a>.</span>
