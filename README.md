@@ -48,9 +48,10 @@ python manage.py load https://raw.githubusercontent.com/Amartyanov1974/bakery-da
 `LINKS = '["Ваша ссылка", "Ваша ссылка"]'`.
 
 Для создания реекламных ссылок и внесения их в базу данных, в командной строке необходимо ввести команду:
-
-`python manage.py create_bitlink`.
-
+```sh
+python manage.py create_bitlink
+```
 Для подсчёта количества переходов с внесением их в базу данных исользуется команда:
-
+```sh
 `python manage.py count_clicks`.
+```

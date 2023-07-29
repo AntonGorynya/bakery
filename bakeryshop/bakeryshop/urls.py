@@ -25,5 +25,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('index.html', views.index, name='index'),
     path('lk', views.lk, name='lk'),
+    path('sync/', views.sync_click, name='sync_click'),
     path('login', views.login_page, name='login'),
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
