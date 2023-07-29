@@ -32,10 +32,10 @@ def index(request):
             delivery_comments = request.GET.get('DELIVCOMMENTS')
             phone = request.GET.get('PHONE')
             user_name = request.GET.get('NAME')
-            client = Customer.objects.filter(phonenumber=phone)
-            if client:
-                client = client.first()
-                user_name = client.name
+            customer = Customer.objects.filter(phonenumber=phone)
+            if customer:
+                customer = customer.first()
+                user_name = customer.name
             user_login = f'{user_name}{phone}'
 
             try:
@@ -48,12 +48,13 @@ def index(request):
                     username=user_login,
                     password='password',
                 )
-            customer, created = Customer.objects.get_or_create(
-                client=user,
-                phonenumber=phone,
-                name=user_name,
-                mail=email
-            )
+                customer, created = Customer.objects.get_or_create(
+                    client=user,
+                    phonenumber=phone,
+                    name=user_name,
+                    mail=email,
+                    address= address
+                )
 
             cake, _ = Cake.objects.get_or_create(
                 price='100',
