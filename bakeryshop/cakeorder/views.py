@@ -62,7 +62,7 @@ def index(request):
                     address= address
                 )
             login(request, user)
-            request.session['user_name'] = client.name
+            request.session['user_name'] = customer.name
             cake, _ = Cake.objects.get_or_create(
                 price='100',
                 levels_number=levels.get(id=level_id),
