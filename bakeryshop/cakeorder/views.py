@@ -204,7 +204,7 @@ def sync_click(request):
 def get_price(row):
     try:
         return row.price
-    except Exception  as e:
+    except AttributeError as e:
         print(e)
         return 0
 
