@@ -28,5 +28,6 @@ urlpatterns = [
     path('lk', views.lk, name='lk'),
     path('sync/', views.sync_click, name='sync_click'),
     path('login', views.login_page, name='login'),
+    path('logout', views.logout_page, name='logout'),
 
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
