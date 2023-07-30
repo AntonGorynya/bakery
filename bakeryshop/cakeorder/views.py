@@ -24,6 +24,7 @@ def index(request):
 
     if request.method == 'GET':
         if request.GET:
+            cake_id = request.GET.get('CAKE_ID')
             level_id = request.GET.get('LEVELS')
             form_id = request.GET.get('FORM')
             topping_id = request.GET.get('TOPPING')
@@ -40,11 +41,19 @@ def index(request):
             user_name = request.GET.get('NAME')
             customer = Customer.objects.filter(phonenumber=phone)
 
-            form = forms.get(id=form_id)
-            levels_number = levels.get(id=level_id)
-            topping = toppings.get(id=topping_id)
-            decor = decors.get_or_none(id=decor_id)
-            berry = berries.get_or_none(id=berries_id)
+            if cake_id:
+                cake = Cake.objects.get(id=cake_id)
+                form = cake.form
+                levels_number = cake.levels_number
+                topping = cake.topping
+                decor = cake.decor
+                berry = cake.berries
+            else:
+                form = forms.get(id=form_id)
+                levels_number = levels.get(id=level_id)
+                topping = toppings.get(id=topping_id)
+                decor = decors.get_or_none(id=decor_id)
+                berry = berries.get_or_none(id=berries_id)
 
 
             if customer:
