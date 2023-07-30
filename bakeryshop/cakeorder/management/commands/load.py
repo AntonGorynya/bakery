@@ -3,16 +3,29 @@ import json
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand
+from django.core.files.base import ContentFile
 import requests
+from urllib.parse import urlparse
+from cakeorder.models import Levels_number, Form, Topping, Berries, Decor, Cake
 
-from cakeorder.models import Levels_number, Form, Topping, Berries, Decor
+
+def save_image(cake, img_url):
+    response = requests.get(img_url)
+    response.raise_for_status
+    img = ContentFile(response.content)
+    img_path = urlparse(img_url)
+    img_name = os.path.basename(img_path.path)
+    cake.image.save(img_name, img, save=True)
 
 
 class Command(BaseCommand):
     help = u'Загрузка данных'
 
     def add_arguments(self, parser):
-        parser.add_argument('url', type=str, help=u'Url адрес к Json файлу')
+        parser.add_argument(
+            '-url', type=str, help=u'Url адрес к Json файлу',
+            default='https://raw.githubusercontent.com/Amartyanov1974/bakery-data/main/data_bakery.json',
+            )
 
     def handle(self, *args, **options):
 
@@ -54,6 +67,15 @@ class Command(BaseCommand):
                         name=position['name'], price=position['price'])
                     if created:
                         print(f'В базу добавили {unit.name}')
+                for cake in bakery_info['Cake']:
+                    unit, created = Cake.objects.get_or_create(
+                        name=cake['name'], price=cake['price'],
+                        occasion=cake['occasion'] , type=cake['type'])
+                    if created:
+                        img_url=cake['image']
+                        save_image(unit, img_url)
+                        print(f'В базу добавили {unit.name}')
+
             except ValidationError:
                 print('Проверьте правильность написания ссылки')
             except json.decoder.JSONDecodeError:

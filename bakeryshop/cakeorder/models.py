@@ -155,14 +155,16 @@ class Cake(models.Model):
         verbose_name='Количество уровней',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     form = models.ForeignKey(
         Form,
         verbose_name='Форма',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     topping = models.ForeignKey(
         Topping,
@@ -191,7 +193,8 @@ class Cake(models.Model):
     sign = models.CharField(
         'Надпись',
         max_length=50,
-        blank=True
+        blank=True,
+        null=True
     )
     type = models.CharField(
         verbose_name='Тип торта',
@@ -206,7 +209,7 @@ class Cake(models.Model):
         verbose_name_plural = 'торты'
 
     def __str__(self):
-        return f"{self.name} {self.occasion}"
+        return f"{self.name} {self.id}"
 
 class Customer(models.Model):
 
