@@ -71,6 +71,7 @@ def index(request):
                 )
             login(request, user)
             request.session['user_name'] = customer.name
+            request.session['user_phone'] = customer.phonenumber
 
             cake, _ = Cake.objects.get_or_create(
                 price=form.price + levels_number.price + topping.price + get_price(decor) + get_price(berry),
@@ -134,6 +135,7 @@ def login_page(request):
 
     login(request, user)
     request.session['user_name'] = client.name
+    request.session['user_phone'] = client.phonenumber
     return redirect('lk')
 
 
@@ -207,5 +209,3 @@ def get_price(row):
     except AttributeError as e:
         print(e)
         return 0
-
-
