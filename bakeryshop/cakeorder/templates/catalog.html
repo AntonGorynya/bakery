@@ -11,16 +11,18 @@
                     <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center">
                         <div class="card border-0 cake__hover">
                             <span class="cake_blue mt-4 fw-lighter mb-4 text-center">{{cake.name}}</span>
-                            <a href="#" class="card-img-overlay"></a>
                             <img src="{{ cake.img_url }}" alt="" class="">
                             <span class="cake_blue mt-4 fw-lighter mb-4 text-center">{{cake.occasion}}</span>
                             <span class="cake_blue mt-4 fw-lighter mb-4 text-center">{{cake.price}} руб.</span>
-                            <a class="btn text-white rounded-pill align-self-center px-5 mt-3 shadow-none cake__button cake__bg_pink" href="./index.html">Купить</a>
+                            <a class="btn text-white rounded-pill align-self-center px-5 mt-3 shadow-none cake__button cake__bg_pink" href="index.html#step3?CAKE_ID={{ cake.id }}">Выбрать</a>
                         </div>
                     </div>
                 {% endfor %}
-
             </article>
+
+
+
+
 
             <span class="cake_grey mt-4 fw-lighter mb-4 text-center">Вы можете добавить торт из <a href="./index.html#step2" class="text-decoration-none cake_pink">Каталога</a> или <a href="./index.html#step3" class="text-decoration-none cake_pink">Создать свой</a>.</span>
             <span class="cake_grey">Есть вопросы?</span>
@@ -33,7 +35,7 @@
 {% include "footer.html" %}
 
 {% block scripts %}
-    <script src="{% static 'registration.js' %}"></script>
+    <script src="{% static 'index.js' %}"></script>
 {% endblock %}
 </body>
 </html>

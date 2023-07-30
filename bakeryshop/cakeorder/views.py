@@ -185,8 +185,9 @@ def catalog(request):
                 'occasion': cake.get_occasion_display(),
                 'img_url': cake.image.url,
                 'price': cake.price,
-                'type': cake.get_type_display()
-                }
+                'type': cake.get_type_display(),
+                'id': cake.id,
+            }
             cakes_con.append(cake_con)
 
     context = {
