@@ -139,6 +139,11 @@ def login_page(request):
     return redirect('lk')
 
 
+def logout_page(request):
+    logout(request)
+    return render(request, 'index.html')
+
+
 def lk(request):
     try:
         user_name = request.session['user_name']
