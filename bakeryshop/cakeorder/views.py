@@ -39,6 +39,14 @@ def index(request):
             phone = request.GET.get('PHONE')
             user_name = request.GET.get('NAME')
             customer = Customer.objects.filter(phonenumber=phone)
+
+            form = forms.get(id=form_id)
+            levels_number = levels.get(id=level_id)
+            topping = toppings.get(id=topping_id)
+            decor = decors.get_or_none(id=decor_id)
+            berry = berries.get_or_none(id=berries_id)
+
+
             if customer:
                 customer = customer.first()
                 user_name = customer.name
@@ -59,17 +67,18 @@ def index(request):
                     phonenumber=phone,
                     name=user_name,
                     mail=email,
-                    address= address
+                    address=address
                 )
             login(request, user)
             request.session['user_name'] = customer.name
+
             cake, _ = Cake.objects.get_or_create(
-                price='100',
-                levels_number=levels.get(id=level_id),
-                form=forms.get(id=form_id),
-                topping=toppings.get(id=topping_id),
-                berries=berries.get_or_none(id=berries_id),
-                decor=decors.get_or_none(id=decor_id),
+                price=form.price + levels_number.price + topping.price + get_price(decor) + get_price(berry),
+                levels_number=levels_number,
+                form=form,
+                topping=topping,
+                berries=berry,
+                decor=decor,
                 sign=words
             )
             order, _ = Order.objects.get_or_create(
@@ -191,3 +200,12 @@ def catalog(request):
 def sync_click(request):
     print(count_clicks())
     return redirect("/admin/cakeorder/advertisement/")
+
+def get_price(row):
+    try:
+        return row.price
+    except Exception  as e:
+        print(e)
+        return 0
+
+
