@@ -78,26 +78,27 @@ def index(request):
                     mail=email,
                     address=address
                 )
-            login(request, user)
-            request.session['user_name'] = customer.name
-            request.session['user_phone'] = customer.phonenumber
+            if not cake_id:
+                login(request, user)
+                request.session['user_name'] = customer.name
+                request.session['user_phone'] = customer.phonenumber
 
-            cake, _ = Cake.objects.get_or_create(
-                price=form.price + levels_number.price + topping.price + get_price(decor) + get_price(berry),
-                levels_number=levels_number,
-                form=form,
-                topping=topping,
-                berries=berry,
-                decor=decor,
-                sign=words
-            )
-            order, _ = Order.objects.get_or_create(
-                cake=cake,
-                customer=customer,
-                delivery_time=datetime.strptime(f'{delivery_date} {delivery_time}', '%Y-%m-%d %H:%M'),
-                comment=comment,
-                delivery_comment=delivery_comments
-            )
+                cake, _ = Cake.objects.get_or_create(
+                    price=form.price + levels_number.price + topping.price + get_price(decor) + get_price(berry),
+                    levels_number=levels_number,
+                    form=form,
+                    topping=topping,
+                    berries=berry,
+                    decor=decor,
+                    sign=words
+                )
+                order, _ = Order.objects.get_or_create(
+                    cake=cake,
+                    customer=customer,
+                    delivery_time=datetime.strptime(f'{delivery_date} {delivery_time}', '%Y-%m-%d %H:%M'),
+                    comment=comment,
+                    delivery_comment=delivery_comments
+                )
 
     context = {
         'data': {
