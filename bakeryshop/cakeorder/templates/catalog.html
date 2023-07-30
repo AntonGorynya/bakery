@@ -7,8 +7,7 @@
         <div class="col-12 col-xxl-6 d-flex flex-column justify-content-center align-items-center align-items-xxl-start" id="KT">
             <article class="row pt-header d-flex justify-content-center" id="step2">
                 <h2 class="font_Gogh fs_40 cake_blue text-center mb-3">Каталог тортов</h2>
-                {% if cakes %}
-                    {% for cake in cakes %}
+                {% for cake in cakes %}
                     <div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center">
                         <div class="card border-0 cake__hover">
                             <span class="cake_blue mt-4 fw-lighter mb-4 text-center">{{cake.name}}</span>
@@ -19,8 +18,8 @@
                             <a class="btn text-white rounded-pill align-self-center px-5 mt-3 shadow-none cake__button cake__bg_pink" href="./index.html">Купить</a>
                         </div>
                     </div>
-                    {% endfor %}
-                {% endif %}
+                {% endfor %}
+
             </article>
 
             <span class="cake_grey mt-4 fw-lighter mb-4 text-center">Вы можете добавить торт из <a href="./index.html#step2" class="text-decoration-none cake_pink">Каталога</a> или <a href="./index.html#step3" class="text-decoration-none cake_pink">Создать свой</a>.</span>
