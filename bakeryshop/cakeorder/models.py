@@ -155,14 +155,16 @@ class Cake(models.Model):
         verbose_name='Количество уровней',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     form = models.ForeignKey(
         Form,
         verbose_name='Форма',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     topping = models.ForeignKey(
         Topping,
@@ -191,12 +193,14 @@ class Cake(models.Model):
     sign = models.CharField(
         'Надпись',
         max_length=50,
-        blank=True
+        blank=True,
+        null=True
     )
     type = models.CharField(
         verbose_name='Тип торта',
         choices=TypeChoice.choices,
         max_length=30,
+        default=TypeChoice.CUSTOM,
         blank=True
     )
 
@@ -205,20 +209,18 @@ class Cake(models.Model):
         verbose_name_plural = 'торты'
 
     def __str__(self):
-        return f"{self.name} {self.occasion}"
+        return f"{self.name} {self.id}"
 
 class Customer(models.Model):
 
     client = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        verbose_name = 'клиент',
-        unique=True
+        verbose_name = 'клиент'
     )
     name = models.CharField(
         'Имя клиента',
-        max_length=50,
-        null=True
+        max_length=50
     )
     address = models.CharField(
         max_length=100,
@@ -226,8 +228,7 @@ class Customer(models.Model):
     )
     phonenumber = models.CharField(
         'Номер телефона',
-        max_length=50,
-        unique=True
+        max_length=50
     )
     mail = models.CharField(
         'Электронная почта',
@@ -250,7 +251,7 @@ class Order(models.Model):
         ('Доставляется', 'Доставляется'),
         ('Доставлен', 'Доставлен'),
         ]
-    
+
     cake = models.ForeignKey(
         Cake,
         verbose_name='Торт',
@@ -316,10 +317,10 @@ class Advertisement(models.Model):
         'Количество переходов по ссылке',
         null=True
     )
-    
+
     class Meta:
         verbose_name = 'рекламная ссылка'
         verbose_name_plural = 'рекламные ссылки'
-    
+
     def __str__(self):
         return f"{self.link}: {self.clicks}"

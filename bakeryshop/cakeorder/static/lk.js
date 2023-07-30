@@ -14,7 +14,7 @@ Vue.createApp({
     data() {
         return {
             Edit: false,
-            Name: cakeLk.user,
+            Name: cakeLk.name,
             Phone: cakeLk.phone,
             Email: cakeLk.mail,
             Schema: {

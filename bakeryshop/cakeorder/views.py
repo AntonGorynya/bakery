@@ -10,6 +10,12 @@ from django.shortcuts import redirect
 
 
 def index(request):
+    try:
+        user_name = request.session['user_name']
+        client = Customer.objects.get(name=user_name)
+        name = client.name
+    except:
+        name = ''
     levels = Levels_number.objects.all()
     forms = Form.objects.all()
     toppings = Topping.objects.all()
@@ -32,10 +38,10 @@ def index(request):
             delivery_comments = request.GET.get('DELIVCOMMENTS')
             phone = request.GET.get('PHONE')
             user_name = request.GET.get('NAME')
-            client = Customer.objects.filter(phonenumber=phone)
-            if client:
-                client = client.first()
-                user_name = client.name
+            customer = Customer.objects.filter(phonenumber=phone)
+            if customer:
+                customer = customer.first()
+                user_name = customer.name
             user_login = f'{user_name}{phone}'
 
             try:
@@ -48,13 +54,15 @@ def index(request):
                     username=user_login,
                     password='password',
                 )
-            customer, created = Customer.objects.get_or_create(
-                client=user,
-                phonenumber=phone,
-                name=user_name,
-                mail=email
-            )
-
+                customer, created = Customer.objects.get_or_create(
+                    client=user,
+                    phonenumber=phone,
+                    name=user_name,
+                    mail=email,
+                    address= address
+                )
+            login(request, user)
+            request.session['user_name'] = client.name
             cake, _ = Cake.objects.get_or_create(
                 price='100',
                 levels_number=levels.get(id=level_id),
@@ -93,7 +101,9 @@ def index(request):
             'toppings': [0] + [topping.price for topping in toppings],
             'berries': [0] + [berry.price for berry in berries],
             'decors': [0] + [decor.price for decor in decors],
-        }
+        },
+        'client': {
+            'name': name}
     }
 
     return render(request, 'index.html', context=context)
@@ -119,23 +129,26 @@ def login_page(request):
 
 
 def lk(request):
-    user_name = request.session['user_name']
+    try:
+        user_name = request.session['user_name']
+    except:
+        return redirect('/')
+
     client = Customer.objects.get(name=user_name)
     orders = Order.objects.filter(customer=client)
     orders_con =[]
     if orders:
         for order in orders:
-            print(order.id)
             order_con = {
                 'numer': order.id,
-                'cake': order.cake,
+                'cake': order.cake.name,
                 'status': order.status,
                 'delivery_time': order.delivery_time.strftime('%H:%M - %d %B')}
             orders_con.append(order_con)
 
     context = {
         'client': {
-            'user': client.name,
+            'name': client.name,
             'phone': client.phonenumber,
             'mail': client.mail,
         },
@@ -143,6 +156,36 @@ def lk(request):
     }
 
     return render(request, 'lk.html', context = context)
+
+
+def catalog(request):
+    try:
+        user_name = request.session['user_name']
+        client = Customer.objects.get(name=user_name)
+        name = client.name
+    except:
+        name = ''
+    cakes = Cake.objects.filter(type='CG')
+    cakes_con =[]
+    if cakes:
+        for cake in cakes:
+            cake_con = {
+                'name': cake.name,
+                'occasion': cake.get_occasion_display(),
+                'img_url': cake.image.url,
+                'price': cake.price,
+                'type': cake.get_type_display()
+                }
+            cakes_con.append(cake_con)
+
+    context = {
+        'client': {
+            'name': name,
+        },
+        'cakes': cakes_con
+    }
+    print(context['cakes'])
+    return render(request, 'catalog.html', context = context)
 
 
 def sync_click(request):
