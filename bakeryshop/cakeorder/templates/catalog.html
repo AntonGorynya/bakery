@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -119,7 +120,7 @@
                             <div class="card border-0 cake__hover">
                                 <span class="cake_blue mt-4 fw-lighter mb-4 text-center">{{cake.name}}</span>
                                 <a href="#" class="card-img-overlay"></a>
-                                <img src="{% static cake.img_url %}" alt="" class="">
+                                <img src="{{ cake.img_url }}" alt="" class="">
                                 <span class="cake_blue mt-4 fw-lighter mb-4 text-center">{{cake.occasion}}</span>
                                 <span class="cake_blue mt-4 fw-lighter mb-4 text-center">{{cake.price}} руб.</span>
                                 <a class="btn text-white rounded-pill align-self-center px-5 mt-3 shadow-none cake__button cake__bg_pink" href="./index.html">Купить</a>
