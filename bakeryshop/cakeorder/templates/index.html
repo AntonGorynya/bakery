@@ -72,7 +72,7 @@
                         <button @click="Reset" type="button" class="btn-close border rounded-pill" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-header border-0 py-0">
-                        <label for="reg" class="modal-title font_Gogh fs_40 cake_blue" id="RegModalLabel">Вход / Регистрация</label>
+                        <label for="reg" class="modal-title font_Gogh fs_40 cake_blue" id="RegModalLabel">Вход</label>
                     </div>
                     <form class="d-none" action="{% url 'login' %}" method="post">
                         {% csrf_token %}
@@ -368,6 +368,7 @@
 
                                 </div>
                                 <button type="submit" class="btn btn_hover text-white rounded-pill mt-3 px-5 shadow-none cake__button cake__bg_pink">К оплате</button>
+                                <p class="cake_blue align-text-center">`Нажимая на кнопку, вы соглашаетесь на обработку персональных данных в соответствии с политикой конфиденциальности`</p>
                             </div>
                         </div>
                     </div>
