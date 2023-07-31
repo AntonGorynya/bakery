@@ -32,8 +32,18 @@ python manage.py createsuperuser
 ### Загрузка данных
 Наполните базу начальными данными
 ```sh
-python3 manage.py load https://raw.githubusercontent.com/Amartyanov1974/bakery-data/main/data_bakery.json
+python manage.py load
 ```
+По умолчанию данные берутся с этого адреса
+
+` https://raw.githubusercontent.com/Amartyanov1974/bakery-data/main/data_bakery.json`
+
+Если хотите загрузить свои данные, команда будет выглядеть так:
+
+```sh
+python manage.py load -url "url_to_file.json"
+```
+
 
 ### Создание и мониторинг рекламных ссылок
 
@@ -48,9 +58,10 @@ python3 manage.py load https://raw.githubusercontent.com/Amartyanov1974/bakery-d
 `LINKS = '["Ваша ссылка", "Ваша ссылка"]'`.
 
 Для создания реекламных ссылок и внесения их в базу данных, в командной строке необходимо ввести команду:
-
-`python manage.py create_bitlink`.
-
+```sh
+python manage.py create_bitlink
+```
 Для подсчёта количества переходов с внесением их в базу данных исользуется команда:
-
+```sh
 `python manage.py count_clicks`.
+```

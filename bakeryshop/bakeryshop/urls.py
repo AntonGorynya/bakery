@@ -19,9 +19,15 @@ from cakeorder import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('catalog', views.catalog, name='catalog'),
+    path('index.html', views.index, name='index'),
     path('lk', views.lk, name='lk'),
-    path('lk-order', views.lk_order, name='lk_order'),
+    path('sync/', views.sync_click, name='sync_click'),
+    path('login', views.login_page, name='login'),
+    path('logout', views.logout_page, name='logout'),
+
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

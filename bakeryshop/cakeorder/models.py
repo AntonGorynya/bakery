@@ -2,6 +2,16 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
+
+
+class GetOrNoneQuerySet(models.QuerySet):
+
+    def get_or_none(self, *args, **kwargs):
+        try:
+            return self.get(*args, **kwargs)
+        except :
+            return None
 
 
 class Levels_number(models.Model):
@@ -69,6 +79,8 @@ class Berries (models.Model):
         verbose_name='Наличие',
         default=True)
 
+    objects = GetOrNoneQuerySet.as_manager()
+
     class Meta:
         verbose_name = 'Ягода'
         verbose_name_plural = 'Ягоды'
@@ -94,6 +106,8 @@ class Decor (models.Model):
         verbose_name = 'Декор'
         verbose_name_plural = 'Декоры'
 
+    objects = GetOrNoneQuerySet.as_manager()
+
     def __str__(self):
         return self.name
 
@@ -113,7 +127,8 @@ class Cake(models.Model):
     name = models.CharField(
         'Название',
         max_length=50,
-        blank=True
+        blank=True,
+        default='Торт',
     )
     occasion = models.CharField(
         verbose_name='Повод',
@@ -123,7 +138,10 @@ class Cake(models.Model):
     )
     image = models.ImageField(
         'картинка',
-        blank=True
+        blank=True,
+        null=True,
+        default='default.png'
+
     )
     price = models.DecimalField(
         max_digits=7,
@@ -137,45 +155,52 @@ class Cake(models.Model):
         verbose_name='Количество уровней',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     form = models.ForeignKey(
         Form,
         verbose_name='Форма',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     topping = models.ForeignKey(
         Topping,
         verbose_name='Топпинг',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     berries = models.ForeignKey(
         Berries,
         verbose_name='Ягоды',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     decor = models.ForeignKey(
         Decor,
         verbose_name='Декор',
         on_delete=models.PROTECT,
         related_name='cakes',
-        blank=True
+        blank=True,
+        null=True
     )
     sign = models.CharField(
         'Надпись',
         max_length=50,
-        blank=True
+        blank=True,
+        null=True
     )
     type = models.CharField(
         verbose_name='Тип торта',
         choices=TypeChoice.choices,
         max_length=30,
+        default=TypeChoice.CUSTOM,
         blank=True
     )
 
@@ -184,12 +209,18 @@ class Cake(models.Model):
         verbose_name_plural = 'торты'
 
     def __str__(self):
-        return f"{self.name} {self.occasion}"
+        return f"{self.name} {self.id}"
 
 class Customer(models.Model):
+
+    client = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name = 'клиент'
+    )
     name = models.CharField(
-        'ФИО клиента',
-        max_length=50,
+        'Имя клиента',
+        max_length=50
     )
     address = models.CharField(
         max_length=100,
@@ -214,6 +245,13 @@ class Customer(models.Model):
 
 
 class Order(models.Model):
+
+    STATUS_IS_CHOICES = [
+        ('Готовится', 'Готовится'),
+        ('Доставляется', 'Доставляется'),
+        ('Доставлен', 'Доставлен'),
+        ]
+
     cake = models.ForeignKey(
         Cake,
         verbose_name='Торт',
@@ -248,6 +286,13 @@ class Order(models.Model):
         blank=True,
         max_length=400
     )
+    status = models.CharField(
+        verbose_name='Статус заказа',
+        blank=True,
+        max_length=400,
+        choices=STATUS_IS_CHOICES,
+        default='Готовится'
+    )
 
     class Meta:
         verbose_name = 'заказ'
@@ -272,10 +317,10 @@ class Advertisement(models.Model):
         'Количество переходов по ссылке',
         null=True
     )
-    
+
     class Meta:
         verbose_name = 'рекламная ссылка'
         verbose_name_plural = 'рекламные ссылки'
-    
+
     def __str__(self):
         return f"{self.link}: {self.clicks}"

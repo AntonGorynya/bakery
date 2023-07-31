@@ -15,10 +15,11 @@ from typing import Any
 class Command(BaseCommand):
     help = 'Сформировать набор ссылок bitly'
     
-    def handle(self, *args: Any, **options: Any) -> str | None:
+    def handle(self, *args: Any, **options: Any):
         access_token = os.environ["BITLY_ACCESS_TOKEN"]
         try:
             links = json.loads(os.environ['LINKS'])
+            print(links)
             for link in links:
                 url_template = "https://api-ssl.bitly.com/v4/bitlinks"
                 headers = {
