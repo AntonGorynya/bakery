@@ -73,19 +73,8 @@ def index(request):
                 topping = cake.topping
                 decor = cake.decor
                 berry = cake.berries
-                cake = {
-                    'name': cake.name,
-                }
-                if levels_number:
-                    cake['levels_number'] = levels_number.id
-                if topping:
-                    cake['topping'] = topping.id
-                if decor:
-                    cake['decor'] = decor.id
-                if berry:
-                    cake['berry'] = berry.id
-                if form:
-                    cake['form'] = form.id
+                cake = convert_cake_to_json(cake)
+
             else:
                 form = forms.get(id=form_id)
                 levels_number = levels.get(id=level_id)
@@ -113,7 +102,8 @@ def index(request):
                     comment=comment,
                     delivery_comment=delivery_comments
                 )
-
+                cake = convert_cake_to_json(cake)
+    print(cake)
     context = {
         'data': {
             'levels': [level.quantity for level in levels],
@@ -249,3 +239,19 @@ def get_price(row):
         return row.price
     except AttributeError as e:
         return 0
+
+def convert_cake_to_json(cake):
+    cake_json = {
+        'name': cake.name,
+    }
+    if cake.levels_number:
+        cake_json['levels_number'] = cake.levels_number.id
+    if cake.topping:
+        cake_json['topping'] = cake.topping.id
+    if cake.decor:
+        cake_json['decor'] = cake.decor.id
+    if cake.berries:
+        cake_json['berry'] = cake.berries.id
+    if cake.form:
+        cake_json['form'] = cake.form.id
+    return cake_json
