@@ -164,6 +164,16 @@ def login_page(request):
     return redirect('lk')
 
 
+
+def reg_page(request):
+    name = request.GET.get('NAME')
+    print(name)
+    context = {}
+    return render(request, 'reg.html')
+
+
+
+
 def logout_page(request):
     logout(request)
     return render(request, 'index.html')
