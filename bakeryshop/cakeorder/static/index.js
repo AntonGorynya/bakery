@@ -3,6 +3,12 @@ function loadJson(elementID) {
 }
 var cakeNames = loadJson('cake_names');
 var cakeCosts = loadJson('cake_costs');
+var cake = loadJson('cake');
+
+console.log(cake);
+
+
+
 
 Vue.createApp({
     name: "App",
@@ -119,13 +125,13 @@ Vue.createApp({
                 Decors: cakeCosts['decors'],
                 Words: 500
             },
-            Levels: 0,
-            Form: 0,
-            Topping: 0,
-            Berries: 0,
-            Decor: 0,
+            Levels: JSON.stringify(cake.levels_number),
+            Form: JSON.stringify(cake.form),
+            Topping: JSON.stringify(cake.topping),
+            Berries: JSON.stringify(cake.berry),
+            Decor: JSON.stringify(cake.decor),
             Words: '',
-            Comments: '',
+            Comments: cake.name,
             Designed: false,
 
             Name: '',
