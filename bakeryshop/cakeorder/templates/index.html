@@ -291,12 +291,28 @@
                             </div>
                             <button type="submit" class="btn btn_hover text-white rounded-pill mt-3 px-5 shadow-none cake__button cake__bg_pink">К оплате</button>
                             <p class="cake_grey mt-4 fw-lighter mb-4 text-end">Нажимая на кнопку, вы соглашаетесь на обработку персональных данных в соответствии с политикой конфиденциальности`</p>
+
+
+
                         </div>
                     </div>
                 </div>
             </v-form>
         </section>
     </article>
+
+
+
+<form class="yoomoney-payment-form" action="https://yookassa.ru/integration/simplepay/payment" method="post" accept-charset="utf-8" >
+    <div class="col-12 col-md-6 d-flex flex-column align-items-center align-items-md-end mt-3 mt-md-0 ym-payment-btn-block">
+        <div class="ym-input-icon-rub ym-display-none">
+            <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value=100>
+        </div>
+        <button type="submit" class="btn btn_hover text-white rounded-pill mt-3 px-5 shadow-none cake__button cake__bg_pink">К оплате </button>
+    </div>
+    <input name="shopId" type="hidden" value="237136">
+</form>
+
 
 {% endblock %}
 
@@ -307,9 +323,8 @@
         {{ data.cake|json_script:"cake" }}
     {% endif%}
 
-
     <script src="{% static 'index.js' %}"></script>
-
+    <script src="https://yookassa.ru/integration/simplepay/js/yookassa_construct_form.js"></script>
 {% endblock %}
 </body>
 </html>

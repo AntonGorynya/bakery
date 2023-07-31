@@ -74,7 +74,7 @@ def index(request):
                 decor = cake.decor
                 berry = cake.berries
                 cake = {
-                    'name': cake.name
+                    'name': cake.name,
                 }
                 if levels_number:
                     cake['levels_number'] = levels_number.id
