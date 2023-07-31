@@ -23,6 +23,7 @@ def count_clicks():
                 "Authorization": f"Bearer {access_token}",
             }
             url = advertisement.bitlink
+            print(url)
             parsed_bitlink = urlparse(url)
             parsed_bitlink = f"{parsed_bitlink.netloc}{parsed_bitlink.path}"
             url = url_template.format(parsed_bitlink)
