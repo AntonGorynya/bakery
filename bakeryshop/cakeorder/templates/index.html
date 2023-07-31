@@ -319,9 +319,7 @@
 {% block scripts %}
     {{ names|json_script:"cake_names" }}
     {{ costs|json_script:"cake_costs" }}
-    {% if data.cake %}
-        {{ data.cake|json_script:"cake" }}
-    {% endif%}
+    {{ data.cake|json_script:"cake" }}
 
     <script src="{% static 'index.js' %}"></script>
     <script src="https://yookassa.ru/integration/simplepay/js/yookassa_construct_form.js"></script>
