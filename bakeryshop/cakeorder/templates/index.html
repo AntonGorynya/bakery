@@ -265,7 +265,6 @@
                             <error-message name="time" class="from__alert"></error-message>
                         </span>
                     </div>
-
                     <div class="row">
                         <div class="col-6 col-lg-4 d-flex flex-column">
                             <label for="address" class="my-1 fs_40 cake_blue">Адрес</label>
@@ -285,35 +284,22 @@
                         </div>
                         <div class="col-12 col-md-6 d-flex flex-column align-items-center align-items-md-end mt-3 mt-md-0">
                             <div class="d-flex">
-
                                 <span class="cake_pink fs_40 fw-bold me-2">Итого: {% verbatim %}{{ Cost }}{% endverbatim %}₽</span>
-
                             </div>
-                            <button type="submit" class="btn btn_hover text-white rounded-pill mt-3 px-5 shadow-none cake__button cake__bg_pink">К оплате</button>
+                            <form action="https://yookassa.ru/integration/simplepay/payment" method="post" accept-charset="utf-8" >
+                                <div class="ym-input-icon-rub ym-display-none">
+                                    <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value=100>
+                                </div>
+                                <button type="submit" class="btn btn_hover text-white rounded-pill mt-3 px-5 shadow-none cake__button cake__bg_pink">К оплате </button>
+                                <input name="shopId" type="hidden" value="237136">
+                            </form>
                             <p class="cake_grey mt-4 fw-lighter mb-4 text-end">Нажимая на кнопку, вы соглашаетесь на обработку персональных данных в соответствии с политикой конфиденциальности`</p>
-
-
-
                         </div>
                     </div>
                 </div>
             </v-form>
         </section>
     </article>
-
-
-
-<form class="yoomoney-payment-form" action="https://yookassa.ru/integration/simplepay/payment" method="post" accept-charset="utf-8" >
-    <div class="col-12 col-md-6 d-flex flex-column align-items-center align-items-md-end mt-3 mt-md-0 ym-payment-btn-block">
-        <div class="ym-input-icon-rub ym-display-none">
-            <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value=100>
-        </div>
-        <button type="submit" class="btn btn_hover text-white rounded-pill mt-3 px-5 shadow-none cake__button cake__bg_pink">К оплате </button>
-    </div>
-    <input name="shopId" type="hidden" value="237136">
-</form>
-
-
 {% endblock %}
 
 {% block scripts %}
