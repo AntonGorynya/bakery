@@ -10,17 +10,18 @@ from django.shortcuts import redirect
 
 
 def index(request):
-    try:
-        user_name = request.session['user_name']
-        client = Customer.objects.get(name=user_name)
+    user_name = request.session['user_name']
+    client = Customer.objects.get_or_none(name=user_name)
+    name = ''
+    if client:
         name = client.name
-    except:
-        name = ''
+
     levels = Levels_number.objects.all()
     forms = Form.objects.all()
     toppings = Topping.objects.all()
     berries = Berries.objects.all()
     decors = Decor.objects.all()
+    cake = None
 
     if request.method == 'GET':
         if request.GET:
@@ -40,21 +41,6 @@ def index(request):
             phone = request.GET.get('PHONE')
             user_name = request.GET.get('NAME')
             customer = Customer.objects.filter(phonenumber=phone)
-
-            if cake_id:
-                cake = Cake.objects.get(id=cake_id)
-                form = cake.form
-                levels_number = cake.levels_number
-                topping = cake.topping
-                decor = cake.decor
-                berry = cake.berries
-            else:
-                form = forms.get(id=form_id)
-                levels_number = levels.get(id=level_id)
-                topping = toppings.get(id=topping_id)
-                decor = decors.get_or_none(id=decor_id)
-                berry = berries.get_or_none(id=berries_id)
-
 
             if customer:
                 customer = customer.first()
@@ -78,7 +64,21 @@ def index(request):
                     mail=email,
                     address=address
                 )
-            if not cake_id:
+
+            if cake_id:
+                cake = Cake.objects.get(id=cake_id)
+                form = cake.form
+                levels_number = cake.levels_number
+                topping = cake.topping
+                decor = cake.decor
+                berry = cake.berries
+            else:
+                form = forms.get(id=form_id)
+                levels_number = levels.get(id=level_id)
+                topping = toppings.get(id=topping_id)
+                decor = decors.get_or_none(id=decor_id)
+                berry = berries.get_or_none(id=berries_id)
+
                 login(request, user)
                 request.session['user_name'] = customer.name
                 request.session['user_phone'] = customer.phonenumber
@@ -107,6 +107,7 @@ def index(request):
             'toppings': toppings,
             'berries': berries,
             'decors': decors,
+            'cake': cake,
         },
         'names': {
             'levels': ['не выбрано'] + [level.quantity for level in levels],
@@ -223,5 +224,4 @@ def get_price(row):
     try:
         return row.price
     except AttributeError as e:
-        print(e)
         return 0

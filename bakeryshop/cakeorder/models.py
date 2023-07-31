@@ -236,6 +236,8 @@ class Customer(models.Model):
         blank=True
     )
 
+    objects = GetOrNoneQuerySet.as_manager()
+
     class Meta:
         verbose_name = 'клиент'
         verbose_name_plural = 'клиенты'
