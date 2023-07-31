@@ -173,7 +173,7 @@ def lk(request):
     try:
         user_name = request.session['user_name']
     except:
-        return redirect('/')
+        return redirect('index')
 
     client = Customer.objects.get(name=user_name)
     orders = Order.objects.filter(customer=client)
