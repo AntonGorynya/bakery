@@ -22,7 +22,7 @@ def index(request):
     toppings = Topping.objects.all()
     berries = Berries.objects.all()
     decors = Decor.objects.all()
-    cake = None
+    cake = {}
 
     if request.method == 'GET':
         if request.GET:
@@ -103,7 +103,8 @@ def index(request):
                     delivery_comment=delivery_comments
                 )
                 cake = convert_cake_to_json(cake)
-    print(cake)
+                # Далее тут редирект на страницу оплаты.
+
     context = {
         'data': {
             'levels': [level.quantity for level in levels],
