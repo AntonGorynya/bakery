@@ -73,6 +73,19 @@ def index(request):
                 topping = cake.topping
                 decor = cake.decor
                 berry = cake.berries
+                cake = {
+                    'name': cake.name
+                }
+                if levels_number:
+                    cake['levels_number'] = levels_number.id
+                if topping:
+                    cake['topping'] = topping.id
+                if decor:
+                    cake['decor'] = decor.id
+                if berry:
+                    cake['berry'] = berry.id
+                if form:
+                    cake['form'] = form.id
             else:
                 form = forms.get(id=form_id)
                 levels_number = levels.get(id=level_id)
