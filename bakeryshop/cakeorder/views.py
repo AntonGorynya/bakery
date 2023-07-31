@@ -10,11 +10,12 @@ from django.shortcuts import redirect
 
 
 def index(request):
-    user_name = request.session['user_name']
-    client = Customer.objects.get_or_none(name=user_name)
     name = ''
-    if client:
-        name = client.name
+    if 'user_name' in request.session:
+        user_name = request.session['user_name']
+        client = Customer.objects.get_or_none(name=user_name)
+        if client:
+            name = client.name
 
     levels = Levels_number.objects.all()
     forms = Form.objects.all()
