@@ -91,38 +91,67 @@
                 <div class="d-flex align-items-center flex-wrap mb-3">
                     <span class="me-3 fs_40 cake_blue">Количество уровней</span>
                     {% for level in data.levels %}
-                        <v-field v-model="Levels" type="radio" name="lvls" id="num{{ level }}" value="{{ level }}" class="d-none cake__input"></v-field>
-                        <label for="num{{ level }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ level }}</label>
+                        {% if data.cake.levels_number.quantity == level  %}
+                            <p>active</p>
+                            <v-field v-model="Levels" type="radio" name="lvls" id="num{{ level }}" value="{{ level }}" class="d-none cake__input"></v-field>
+                            <label for="num{{ level }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ level }}</label>
+                        {% else  %}
+                            <v-field v-model="Levels" type="radio" name="lvls" id="num{{ level }}" value="{{ level }}" class="d-none cake__input"></v-field>
+                            <label for="num{{ level }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ level }}</label>
+                        {% endif %}
                     {% endfor %}
                 </div>
 
                 <div class="d-flex align-items-center flex-wrap mb-3">
                     <span class="me-3 fs_40 cake_blue">Форма</span>
                     {% for form in data.forms %}
-                        <v-field v-model="Form" type="radio" name="form" id="form{{ form.id }}" value="{{ form.id }}" class="d-none cake__input"></v-field>
-                        <label for="form{{ form.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ form.name }}</label>
+                        {% if data.cake.form == form  %}
+                            <p>active</p>
+                            <v-field v-model="Form" type="radio" name="form" id="form{{ form.id }}" value="{{ form.id }}" class="d-none cake__input"></v-field>
+                            <label for="form{{ form.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ form.name }}</label>
+                        {% else  %}
+                            <v-field v-model="Form" type="radio" name="form" id="form{{ form.id }}" value="{{ form.id }}" class="d-none cake__input"></v-field>
+                            <label for="form{{ form.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ form.name }}</label>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <div class="d-flex align-items-center flex-wrap mb-3">
                     <span class="me-3 fs_40 cake_blue">Топпинг</span>
                     {% for topping in data.toppings %}
-                        <v-field v-model="Topping" type="radio" name="topping" id="topping{{ topping.id }}" value="{{ topping.id }}" class="d-none cake__input"></v-field>
-                        <label for="topping{{ topping.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ topping.name }}</label>
+                        {% if data.cake.topping == topping  %}
+                            <p>active</p>
+                            <v-field v-model="Topping" type="radio" name="topping" id="topping{{ topping.id }}" value="{{ topping.id }}" class="d-none cake__input"></v-field>
+                            <label for="topping{{ topping.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ topping.name }}</label>
+                        {% else  %}
+                            <v-field v-model="Topping" type="radio" name="topping" id="topping{{ topping.id }}" value="{{ topping.id }}" class="d-none cake__input"></v-field>
+                            <label for="topping{{ topping.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ topping.name }}</label>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <h1 class="me-3 fs_40 cake_pink mb-3 mt-5">Дополнительно</h1>
                 <div class="d-flex align-items-center flex-wrap mb-3">
                     <span class="me-3 fs_40 cake_blue">Ягоды</span>
                     {% for berry in data.berries %}
-                        <v-field v-model="Berries" type="radio" name="berries" id="berries{{ berry.id }}" value="{{ berry.id }}" class="d-none cake__input"></v-field>
-                        <label for="berries{{ berry.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ berry.name }}</label>
+                        {% if data.cake.berries == berry  %}
+                            <p>active</p>
+                            <v-field v-model="Berries" type="radio" name="berries" id="berries{{ berry.id }}" value="{{ berry.id }}" class="d-none cake__input"></v-field>
+                            <label for="berries{{ berry.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ berry.name }}</label>
+                        {% else  %}
+                            <v-field v-model="Berries" type="radio" name="berries" id="berries{{ berry.id }}" value="{{ berry.id }}" class="d-none cake__input"></v-field>
+                            <label for="berries{{ berry.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ berry.name }}</label>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <div class="d-flex align-items-center flex-wrap mb-3">
                     <span class="me-3 fs_40 cake_blue">Декор</span>
                     {% for decor in data.decors %}
-                        <v-field v-model="Decor" type="radio" name="decor" id="decor{{ decor.id }}" value="{{ decor.id }}" class="d-none cake__input"></v-field>
-                        <label for="decor{{ decor.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ decor.name }}</label>
+                        {% if data.cake.decor == decor  %}
+                            <v-field v-model="Decor" type="radio" name="decor" id="decor{{ decor.id }}" value="{{ decor.id }}" class="d-none cake__input"></v-field>
+                            <label for="decor{{ decor.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ decor.name }}</label>
+                        {% else  %}
+                            <v-field v-model="Decor" type="radio" name="decor" id="decor{{ decor.id }}" value="{{ decor.id }}" class="d-none cake__input"></v-field>
+                            <label for="decor{{ decor.id }}" class="mx-2 px-3 py-1 cake_grey cake__label">{{ decor.name }}</label>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <div class="row mb-3">
@@ -135,7 +164,7 @@
                 </div>
                 <div>
                     <label for="comment" class="cake_blue">Комментарий к заказу</label>
-                    <textarea v-model="Comments" :class="Comments ? 'cake__border_blue': ''" name="comment" id="comment" rows="3" class="form-control mt-2 cake__textinput" style="resize: none"></textarea>
+                    <textarea v-model="Comments" :class="Comments ? 'cake__border_blue': ''" name="comment" id="comment" rows="3" class="form-control mt-2 cake__textinput" style="resize: none">{{data.cake.name}}</textarea>
                 </div>
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn text-white rounded-pill mt-3 shadow-none cake__button cake__bg_pink">Подтвердить</button>
@@ -274,6 +303,11 @@
 {% block scripts %}
     {{ names|json_script:"cake_names" }}
     {{ costs|json_script:"cake_costs" }}
+    {% if data.cake %}
+        {{ data.cake|json_script:"cake" }}
+    {% endif%}
+
+
     <script src="{% static 'index.js' %}"></script>
 
 {% endblock %}
