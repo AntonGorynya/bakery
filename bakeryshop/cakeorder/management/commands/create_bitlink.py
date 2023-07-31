@@ -32,5 +32,7 @@ class Command(BaseCommand):
                 response.raise_for_status()
                 bitlink = response.json()["link"]
                 Advertisement.objects.update_or_create(link=link, bitlink=bitlink)
+                print(link)
+                print(bitlink)
         except HTTPError as error:
             logging.exception(error)
